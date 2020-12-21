@@ -2,14 +2,17 @@ import pandas
 
 # TODO 1. Create a dictionary:
 phonetic_data = pandas.read_csv("nato_phonetic_alphabet.csv")
-phonetic_dict = {row.letter: row.code for (index, row) in phonetic_data.iterrows()}
+phonetic_dict = {row.letter: row.code for (index, row) in
+                 phonetic_data.iterrows()}
 
 
 # TODO 2. Create a list of the phonetic code words from a word that the user inputs.
 # User input:
 
-bad_word = True
-while bad_word:
+print("")
+
+
+def generate_phonetic():
     word = input("Enter a word: ").upper()
 
     try:
@@ -17,31 +20,20 @@ while bad_word:
 
     except KeyError:
         print("Sorry, only letters in the alphabet please.")
-        bad_word = True
+        print("")
+        generate_phonetic()
 
     else:
-        bad_word = False
         # codes in string:
         str_code = ", ".join(code_list)
-        print(str_code)
+        print(f'''{str_code}
+''')
+
+        restart = input("Restart? (y/n)").lower()
+        if restart == "y":
+            generate_phonetic()
+        else:
+            print("Good Bye!")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-# Another solution using DataFrame:
-# phonetic_dict= {letter: code for (letter, code) in phonetic_data.items()}
-# phonetic_data_frame = pandas.DataFrame(phonetic_dict)
-#
-# nato_dict = {}
-# for (index, row) in phonetic_data_frame.iterrows():
-#     nato_dict[row.letter] = row.code
+generate_phonetic()
